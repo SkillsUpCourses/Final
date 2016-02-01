@@ -82,4 +82,12 @@ public class UserServiceImpl implements UserService {
         return models;
     }
 
+    public UserDAO getDao() {
+        return dao;
+    }
+
+    public void setDao(UserDAO dao) {
+        this.dao = dao;
+    }
+
 }
