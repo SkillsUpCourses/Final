@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.websystique.springmvc.dao;
+package com.websystique.springmvc.dao.impl;
 
+import com.websystique.springmvc.dao.UserDAO;
 import com.websystique.springmvc.entity.User;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -47,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
         return em.createQuery("SELECT user FROM User user").getResultList();
     }
 
-    public void deleteAllUsers() {
+    public void deleteAll() {
         em.clear();
     }
 

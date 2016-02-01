@@ -19,7 +19,7 @@ public interface UserService {
 
 	List<UserDTO> findAll(); 
 	
-	void deleteAllUsers();
+	void deleteAll();
 	
 	public boolean isExist(UserDTO user);
 	

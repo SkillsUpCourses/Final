@@ -1,4 +1,4 @@
-package com.websystique.springmvc.service;
+package com.websystique.springmvc.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.websystique.springmvc.model.UserDTO;
 import com.websystique.springmvc.dao.UserDAO;
 import com.websystique.springmvc.entity.User;
+import com.websystique.springmvc.service.UserService;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -59,8 +60,8 @@ public class UserServiceImpl implements UserService{
 		return dao.isExist(new User(user));
 	}
 	
-	public void deleteAllUsers(){
-		dao.deleteAllUsers();
+	public void deleteAll(){
+		dao.deleteAll();
 	}
 
 }
