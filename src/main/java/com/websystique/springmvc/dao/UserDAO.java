@@ -16,15 +16,15 @@ public interface UserDAO {
 
     User findById(long id);
 
-    void saveUser(User user);
+    void add(User user);
 
-    void updateUser(User user);
+    void update(User user);
 
-    void deleteUserById(long id);
+    void deleteById(long id);
 
-    List<User> findAllUsers();
+    List<User> getAll();
 
     void deleteAllUsers();
 
-    public boolean isUserExist(User user);
+    public boolean isExist(User user);
 }

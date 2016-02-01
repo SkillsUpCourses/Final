@@ -30,7 +30,7 @@ public class UsersRestController {
      
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
-        List<UserDTO> models = userService.findAllUsers();
+        List<UserDTO> models = userService.findAll();
         System.err.println(models.toString());
         List<User> entities = new ArrayList<User>();
         User entity = null;
@@ -68,12 +68,12 @@ public class UsersRestController {
     public ResponseEntity<Void> createUser(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getUsername());
  
-        if (userService.isUserExist(new UserDTO(user))) {
+        if (userService.isExist(new UserDTO(user))) {
             System.out.println("A User with name " + user.getUsername() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
  
-        Long id = userService.saveUser(new UserDTO(user));
+        Long id = userService.save(new UserDTO(user));
  
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(id).toUri());
@@ -99,7 +99,7 @@ public class UsersRestController {
         currentUser.setAddress(user.getAddress());
         currentUser.setEmail(user.getEmail());
          
-        userService.updateUser(new UserDTO(currentUser));
+        userService.update(new UserDTO(currentUser));
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
  
@@ -117,7 +117,7 @@ public class UsersRestController {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
  
-        userService.deleteUserById(id);
+        userService.deleteById(id);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
  

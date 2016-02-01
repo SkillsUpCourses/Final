@@ -11,16 +11,16 @@ public interface UserService {
 	
 	UserDTO findById(long id);
 	
-	long saveUser(UserDTO user);
+	long save(UserDTO user);
 	
-	void updateUser(UserDTO user);
+	void update(UserDTO user);
 	
-	void deleteUserById(long id);
+	void deleteById(long id);
 
-	List<UserDTO> findAllUsers(); 
+	List<UserDTO> findAll(); 
 	
 	void deleteAllUsers();
 	
-	public boolean isUserExist(UserDTO user);
+	public boolean isExist(UserDTO user);
 	
 }

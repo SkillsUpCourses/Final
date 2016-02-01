@@ -5,7 +5,7 @@
     <artifactId>Spring4MVCAngularJSExample</artifactId>
     <packaging>war</packaging>
     <version>1.0.0</version>
-    <name>final</name>
+    <name>alive</name>
 
     <properties>
         <spring.version>4.2.4.RELEASE</spring.version>

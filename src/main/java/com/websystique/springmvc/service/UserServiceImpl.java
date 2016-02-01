@@ -21,9 +21,9 @@ public class UserServiceImpl implements UserService{
        @Autowired
        UserDAO dao;
        
-	public List<UserDTO> findAllUsers() {
+	public List<UserDTO> findAll() {
             List<UserDTO> result = new ArrayList<UserDTO>();
-            List<User> entities = dao.findAllUsers();
+            List<User> entities = dao.getAll();
             UserDTO model = null;
             for (User entity: entities) {
                 model = new UserDTO (entity);
@@ -37,26 +37,26 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	
-	public long saveUser(UserDTO user) {
+	public long save(UserDTO user) {
             //Long id = counter.incrementAndGet();
             User entity = new User(user);
             //entity.setId(id);
-	    dao.saveUser(entity);
+	    dao.add(entity);
             //return id;
             return 1;
 	}
 
-	public void updateUser(UserDTO user) {
-            dao.updateUser(new User(user));
+	public void update(UserDTO user) {
+            dao.update(new User(user));
 		
 	}
 
-	public void deleteUserById(long id) {
-	     dao.deleteUserById(id);
+	public void deleteById(long id) {
+	     dao.deleteById(id);
 	}
 
-	public boolean isUserExist(UserDTO user) {
-		return dao.isUserExist(new User(user));
+	public boolean isExist(UserDTO user) {
+		return dao.isExist(new User(user));
 	}
 	
 	public void deleteAllUsers(){

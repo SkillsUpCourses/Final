@@ -27,23 +27,23 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
-    public void saveUser(User user) {
+    public void add(User user) {
         em.persist(user);
         System.err.println(user.getId());
     }
 
-    public void updateUser(User user) {
+    public void update(User user) {
         User old = em.find(User.class, user.getId());
         old.setUsername(user.getUsername());
         old.setAddress(user.getAddress());
         old.setEmail(user.getEmail());
     }
 
-    public void deleteUserById(long id) {
+    public void deleteById(long id) {
         em.remove(this.findById(id));
     }
 
-    public List<User> findAllUsers() {
+    public List<User> getAll() {
         return em.createQuery("SELECT user FROM User user").getResultList();
     }
 
@@ -51,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
         em.clear();
     }
 
-    public boolean isUserExist(User user) {
+    public boolean isExist(User user) {
         return em.contains(user);
     }
     
