@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author ksu
  */
 @Configuration
-@ComponentScan({"com.websystique.springmvc.dao", "com.websystique.springmvc.service"})
+@ComponentScan({"com.websystique.springmvc.dao.impl", "com.websystique.springmvc.service.impl"})
 @EnableTransactionManagement
 @PropertySource(value = { "classpath:mydb.properties" ,"classpath:project.properties"})
 public class SpringConfig {

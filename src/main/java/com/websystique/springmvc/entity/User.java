@@ -6,11 +6,18 @@
 package com.websystique.springmvc.entity;
 
 import com.websystique.springmvc.model.UserDTO;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -20,7 +27,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +42,17 @@ public class User {
 
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
+    
+    @ManyToOne(cascade = { CascadeType.ALL })  
+    private Hobby hobby;
 
+    @ManyToMany
+    @JoinTable(
+      name="users_places",
+      joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
+      inverseJoinColumns={@JoinColumn(name="PLACE_ID", referencedColumnName="PLACE_ID")})
+    private List<Place> places;
+    
     public User() {
         
     }
@@ -91,6 +108,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    
 
     @Override
     public int hashCode() {

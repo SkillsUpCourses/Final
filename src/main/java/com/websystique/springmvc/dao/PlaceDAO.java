@@ -5,19 +5,12 @@
  */
 package com.websystique.springmvc.dao;
 
-import com.websystique.springmvc.entity.Hobby;
 import com.websystique.springmvc.entity.Place;
-import com.websystique.springmvc.entity.User;
-import java.util.List;
 
 /**
  *
- * @author ksu
+ * @author Ksu
  */
-public interface UserDAO extends GenericDAO <User> {
-
-    void deleteAll();
-    Hobby getHobby(User user);
-    List<Place> getPlaces(User user);
+public interface PlaceDAO  extends GenericDAO<Place>{
     
 }
