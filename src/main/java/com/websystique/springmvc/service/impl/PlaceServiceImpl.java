@@ -12,11 +12,13 @@ import com.websystique.springmvc.service.PlaceService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ksu
  */
+@Service
 public class PlaceServiceImpl implements PlaceService {
 
     @Autowired

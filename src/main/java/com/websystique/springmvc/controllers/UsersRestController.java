@@ -1,6 +1,10 @@
 package com.websystique.springmvc.controllers;
 
+import com.websystique.springmvc.entity.Hobby;
+import com.websystique.springmvc.entity.Place;
 import com.websystique.springmvc.entity.User;
+import com.websystique.springmvc.model.HobbyDTO;
+import com.websystique.springmvc.model.PlaceDTO;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,55 +20,53 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.websystique.springmvc.model.UserDTO;
+import com.websystique.springmvc.service.PlaceService;
 import java.util.ArrayList;
 import com.websystique.springmvc.service.UserService;
 
 @RestController
 public class UsersRestController {
-
+    
     @Autowired
     UserService userService;  //Service which will do all data retrieval/manipulation work
+    
+    @Autowired
+    PlaceService placeService;
 
     //-------------------Retrieve All Users--------------------------------------------------------
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> listAllUsers() {
+    public ResponseEntity<List<UserDTO>> listAllUsers() {
         List<UserDTO> models = userService.findAll();
-        List<User> entities = new ArrayList<User>();
-        User entity = null;
-        for (UserDTO model : models) {
-            entity = new User(model);
-            entities.add(entity);
+        if (models.isEmpty()) {
+            return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
-        if (entities.isEmpty()) {
-            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
-        }
-        return new ResponseEntity<List<User>>(entities, HttpStatus.OK);
+        return new ResponseEntity<List<UserDTO>>(models, HttpStatus.OK);
     }
 
     //-------------------Retrieve Single User--------------------------------------------------------
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUser(@PathVariable("id") long id) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable("id") long id) {
         System.out.println("Fetching User with id " + id);
         UserDTO user = userService.findById(id);
         if (user == null) {
             System.out.println("User with id " + id + " not found");
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<User>(new User(user), HttpStatus.OK);
+        return new ResponseEntity<UserDTO>(user, HttpStatus.OK);
     }
 
     //-------------------Create a User--------------------------------------------------------
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Void> createUser(@RequestBody UserDTO user, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getUsername());
-
-        if (userService.isExist(new UserDTO(user))) {
+        
+        if (userService.isExist(user)) {
             System.out.println("A User with name " + user.getUsername() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
-
-        userService.save(new UserDTO(user));
-
+        
+        userService.save(user);
+        
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -72,56 +74,147 @@ public class UsersRestController {
 
     //------------------- Update a User --------------------------------------------------------
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
         System.out.println("Updating User " + id);
-
-        User currentUser = new User(userService.findById(id));
-
+        
+        UserDTO currentUser = userService.findById(id);
+        
         if (currentUser == null) {
             System.out.println("User with id " + id + " not found");
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
         }
-
+        
         currentUser.setUsername(user.getUsername());
         currentUser.setAddress(user.getAddress());
         currentUser.setEmail(user.getEmail());
-
-        userService.update(new UserDTO(currentUser));
-        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
+        
+        userService.update(currentUser);
+        return new ResponseEntity<UserDTO>(currentUser, HttpStatus.OK);
     }
 
     //------------------- Delete a User --------------------------------------------------------
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
+    public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") long id) {
         System.out.println("Fetching & Deleting User with id " + id);
-
-        User user = new User(userService.findById(id));
+        
+        UserDTO user = userService.findById(id);
         if (user == null) {
             System.out.println("Unable to delete. User with id " + id + " not found");
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
         }
-
+        
         userService.deleteById(id);
-        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
     }
 
     //------------------- Delete All Users --------------------------------------------------------
     @RequestMapping(value = "/user/", method = RequestMethod.DELETE)
-    public ResponseEntity<User> deleteAllUsers() {
+    public ResponseEntity<UserDTO> deleteAllUsers() {
         System.out.println("Deleting All Users");
-
+        
         userService.deleteAll();
-        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
     }
-    
-    
-    
-    //TODO
-        //------------------- Get User's hobby --------------------------------------------------------
-        //------------------- Add User's hobby --------------------------------------------------------
-        //------------------- Delete User's hobby -----------------------------------------------------
-        //------------------- Get Places where user have already been ---------------------------------
-        //------------------- Add Place to user ------------------------------------------------------
-    
 
+    //------------------- Get User's hobby --------------------------------------------------------
+    @RequestMapping(value = "/user/{id}/hobby/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HobbyDTO> getUsersHobby(@PathVariable("id") long id) {
+        System.out.println("Fetching User with id " + id);
+        UserDTO user = userService.findById(id);
+        if (user == null) {
+            System.out.println("User with id " + id + " not found");
+            return new ResponseEntity<HobbyDTO>(HttpStatus.NOT_FOUND);
+        }
+        HobbyDTO hobby = userService.getHobby(user);
+        return new ResponseEntity<HobbyDTO>(hobby, HttpStatus.OK);
+    }
+
+    //------------------- Add User's hobby --------------------------------------------------------
+    @RequestMapping(value = "/user/{id}/hobby/", method = RequestMethod.PUT)
+    public ResponseEntity<HobbyDTO> addUsersHobby(@PathVariable("id") long id, @RequestBody HobbyDTO hobby) {
+        UserDTO currentUser = userService.findById(id);
+        System.out.println("Setting hobby to User id = " + id);
+        
+        if (currentUser == null) {
+            System.out.println("User with id " + id + " not found");
+            return new ResponseEntity<HobbyDTO>(HttpStatus.NOT_FOUND);
+        }
+        
+        userService.addHobby(hobby, currentUser);
+        return new ResponseEntity<HobbyDTO>(userService.getHobby(currentUser), HttpStatus.OK);
+    }
+
+    //------------------- Delete User's hobby -----------------------------------------------------
+     @RequestMapping(value = "/user/{id}/hobby/", method = RequestMethod.DELETE)
+    public ResponseEntity<HobbyDTO> deleteUsersHobby(@PathVariable("id") long id) {
+        System.out.println("Fetching & Deleting User with id " + id);
+        
+        UserDTO user = userService.findById(id);
+        if (user == null) {
+            System.out.println("Unable to delete. User with id " + id + " not found");
+            return new ResponseEntity<HobbyDTO>(HttpStatus.NOT_FOUND);
+        }
+        
+        HobbyDTO hobby =userService.getHobby(user);
+        userService.deleteHobby(hobby, user);
+        return new ResponseEntity<HobbyDTO>(HttpStatus.NO_CONTENT);
+    }
+    //------------------- Get Places where user have already been ---------------------------------
+    @RequestMapping(value = "/user/{id}/place/", method = RequestMethod.GET)
+    public ResponseEntity<List<PlaceDTO>> getUsersPlaces(@PathVariable("id") long id) {
+        System.out.println("Fetching User with id " + id);
+        UserDTO user = userService.findById(id);
+        if (user == null) {
+            System.out.println("User with id " + id + " not found");
+            return new ResponseEntity<List<PlaceDTO>>(HttpStatus.NOT_FOUND);
+        }
+        List<PlaceDTO> places = userService.getPlaces(user);
+        return new ResponseEntity<List<PlaceDTO>>(places, HttpStatus.OK);
+    }
+    //------------------- Add Places to user ------------------------------------------------------
+     @RequestMapping(value = "/user/{id}/place/", method = RequestMethod.PUT)
+     public ResponseEntity<List<PlaceDTO>> addUsersPlaces(@PathVariable("id") long id, @RequestBody List<PlaceDTO> places) {
+        UserDTO currentUser = userService.findById(id);
+        System.out.println("Setting hobby to User id = " + id);
+
+
+        if (currentUser == null) {
+            System.out.println("User with id " + id + " not found");
+            return new ResponseEntity<List<PlaceDTO>>(HttpStatus.NOT_FOUND);
+        }
+
+        userService.addPlaces(places, currentUser);
+
+        return new ResponseEntity<List<PlaceDTO>>(userService.getPlaces(currentUser), HttpStatus.OK);
+    }
+     
+     //------------------- Delete User's single Place -----------------------------------------------------
+     @RequestMapping(value = "/user/{id}/place/{placeID}", method = RequestMethod.DELETE)
+     public ResponseEntity<PlaceDTO> deleteUsersPlace(@PathVariable("id") long id,@PathVariable("placeID") long placeID) {
+        System.out.println("Fetching & Deleting Users plase with id " + placeID);
+        
+        UserDTO user = userService.findById(id);
+        if (user == null) {
+            System.out.println("Unable to delete. User with id " + id + " not found");
+            return new ResponseEntity<PlaceDTO>(HttpStatus.NOT_FOUND);
+        }
+        PlaceDTO place = placeService.findById(placeID);
+        userService.deletePlace(place, user);
+        return new ResponseEntity<PlaceDTO>(HttpStatus.NO_CONTENT);
+    }
+     
+     //------------------- Delete All User's Places -----------------------------------------------------
+     @RequestMapping(value = "/user/{id}/place/", method = RequestMethod.DELETE)
+     public ResponseEntity<PlaceDTO> deleteAllUsersPlaces(@PathVariable("id") long id) {
+        System.out.println("Fetching & Deleting  All plases from user with id " + id);
+        
+        UserDTO user = userService.findById(id);
+        if (user == null) {
+            System.out.println("Unable to delete. User with id " + id + " not found");
+            return new ResponseEntity<PlaceDTO>(HttpStatus.NOT_FOUND);
+        }
+        userService.deleteAllPlaces(user);
+        return new ResponseEntity<PlaceDTO>(HttpStatus.NO_CONTENT);
+    }
 }
+

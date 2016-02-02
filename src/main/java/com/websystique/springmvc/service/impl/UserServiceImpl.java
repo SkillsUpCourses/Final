@@ -23,10 +23,10 @@ import com.websystique.springmvc.service.UserService;
 @Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
-
+    
     @Autowired
     private UserDAO dao;
-
+    
     public List<UserDTO> findAll() {
         List<UserDTO> result = new ArrayList<UserDTO>();
         List<User> entities = dao.getAll();
@@ -37,38 +37,38 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
-
+    
     public UserDTO findById(long id) {
         return new UserDTO(dao.findById(id));
     }
-
+    
     public void save(UserDTO user) {
         User entity = new User(user);
         dao.add(entity);
     }
-
+    
     public void update(UserDTO user) {
         dao.update(new User(user));
-
+        
     }
-
+    
     public void deleteById(long id) {
         dao.deleteById(id);
     }
-
+    
     public boolean isExist(UserDTO user) {
         return dao.isExist(new User(user));
     }
-
+    
     public void deleteAll() {
         dao.deleteAll();
     }
-
+    
     public HobbyDTO getHobby(UserDTO user) {
         Hobby hobby = dao.getHobby(new User(user));
         return new HobbyDTO(hobby);
     }
-
+    
     public List<PlaceDTO> getPlaces(UserDTO user) {
         List<Place> entities = dao.getPlaces(new User(user));
         List<PlaceDTO> models = new ArrayList<PlaceDTO>();
@@ -77,43 +77,56 @@ public class UserServiceImpl implements UserService {
         }
         return models;
     }
-
+    
     public UserDAO getDao() {
         return dao;
     }
-
+    
     public void setDao(UserDAO dao) {
         this.dao = dao;
     }
-
+    
     public void addHobby(HobbyDTO hobby, UserDTO user) {
-        User userEntity = new User (user);
-        Hobby hobbyEntity = new Hobby (hobby);
+        User userEntity = new User(user);
+        Hobby hobbyEntity = new Hobby(hobby);
         userEntity.setHobby(hobbyEntity);
         dao.addHobby(hobbyEntity, userEntity);
     }
-
+    
     public void deleteHobby(HobbyDTO hobby, UserDTO user) {
-        User userEntity = new User (user);
-        Hobby hobbyEntity = new Hobby (hobby);
+        User userEntity = new User(user);
+        Hobby hobbyEntity = new Hobby(hobby);
         userEntity.setHobby(null);
         dao.deleteHobby(hobbyEntity, userEntity);
     }
-
+    
     public void addPlace(PlaceDTO place, UserDTO user) {
-        User userEntity = new User (user);
-        Place placeEntity = new Place (place);
+        User userEntity = new User(user);
+        Place placeEntity = new Place(place);
         userEntity.getPlaces().add(placeEntity);
         placeEntity.getUsers().add(userEntity);
         dao.addPlace(placeEntity, userEntity);
     }
-
+    
+    public void addPlaces(List<PlaceDTO> places, UserDTO user) {
+        for (PlaceDTO place : places) {
+            addPlace(place, user);
+        }
+    }
+    
     public void deletePlace(PlaceDTO place, UserDTO user) {
-        User userEntity = new User (user);
-        Place placeEntity = new Place (place);
+        User userEntity = new User(user);
+        Place placeEntity = new Place(place);
         userEntity.getPlaces().remove(placeEntity);
         placeEntity.getUsers().remove(userEntity);
         dao.deletePlace(placeEntity, userEntity);
     }
 
+    public void deleteAllPlaces(UserDTO user) {
+        List <Place> places = dao.getPlaces(new User(user));
+        for (Place place: places){
+            deletePlace(new PlaceDTO(place), user);
+        }
+    }
+    
 }

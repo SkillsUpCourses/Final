@@ -23,6 +23,9 @@ public interface UserService extends GenericService<UserDTO> {
     void addPlace(PlaceDTO place, UserDTO user);
     
     void deletePlace(PlaceDTO place, UserDTO user);
-
+    
+    void addPlaces(List<PlaceDTO> places, UserDTO user);
+    
+    void deleteAllPlaces(UserDTO user);
 
 }

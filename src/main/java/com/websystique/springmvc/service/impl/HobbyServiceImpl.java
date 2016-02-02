@@ -15,11 +15,13 @@ import com.websystique.springmvc.service.HobbyService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ksu
  */
+@Service
 public class HobbyServiceImpl implements HobbyService {
 
     @Autowired
