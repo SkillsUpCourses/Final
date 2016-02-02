@@ -66,14 +66,14 @@ public class UserServiceImpl implements UserService {
 
     public HobbyDTO getHobby(UserDTO user) {
         Hobby hobby = dao.getHobby(new User(user));
-        return hobby.getModel();
+        return new HobbyDTO(hobby);
     }
 
     public List<PlaceDTO> getPlaces(UserDTO user) {
         List<Place> entities = dao.getPlaces(new User(user));
         List<PlaceDTO> models = new ArrayList<PlaceDTO>();
         for (Place entity : entities) {
-            models.add(entity.getModel());
+            models.add(new PlaceDTO(entity));
         }
         return models;
     }
@@ -84,6 +84,36 @@ public class UserServiceImpl implements UserService {
 
     public void setDao(UserDAO dao) {
         this.dao = dao;
+    }
+
+    public void addHobby(HobbyDTO hobby, UserDTO user) {
+        User userEntity = new User (user);
+        Hobby hobbyEntity = new Hobby (hobby);
+        userEntity.setHobby(hobbyEntity);
+        dao.addHobby(hobbyEntity, userEntity);
+    }
+
+    public void deleteHobby(HobbyDTO hobby, UserDTO user) {
+        User userEntity = new User (user);
+        Hobby hobbyEntity = new Hobby (hobby);
+        userEntity.setHobby(null);
+        dao.deleteHobby(hobbyEntity, userEntity);
+    }
+
+    public void addPlace(PlaceDTO place, UserDTO user) {
+        User userEntity = new User (user);
+        Place placeEntity = new Place (place);
+        userEntity.getPlaces().add(placeEntity);
+        placeEntity.getUsers().add(userEntity);
+        dao.addPlace(placeEntity, userEntity);
+    }
+
+    public void deletePlace(PlaceDTO place, UserDTO user) {
+        User userEntity = new User (user);
+        Place placeEntity = new Place (place);
+        userEntity.getPlaces().remove(placeEntity);
+        placeEntity.getUsers().remove(userEntity);
+        dao.deletePlace(placeEntity, userEntity);
     }
 
 }

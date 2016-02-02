@@ -110,6 +110,24 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public Hobby getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(Hobby hobby) {
+        this.hobby = hobby;
+    }
+
+    public List<Place> getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(List<Place> places) {
+        this.places = places;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         final int prime = 31;

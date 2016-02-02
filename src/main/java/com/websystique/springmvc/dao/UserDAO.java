@@ -20,7 +20,16 @@ public interface UserDAO extends GenericDAO<User> {
     void deleteAll();
 
     Hobby getHobby(User user);
+    
+    void addHobby(Hobby hobby, User user);
+    
+    void deleteHobby(Hobby hobby, User user);
 
     List<Place> getPlaces(User user);
+    
+    void addPlace(Place place, User user);
+    
+    void deletePlace(Place place, User user);
+
 
 }

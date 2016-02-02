@@ -13,7 +13,7 @@ import javax.persistence.Column;
  *
  * @author ksu
  */
-public class PlaceDTO implements Model<Place> {
+public class PlaceDTO {
 
     private long placeId;
     private String title;
@@ -45,10 +45,6 @@ public class PlaceDTO implements Model<Place> {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Place getEntity() {
-        return new Place(this);
     }
 
     @Override

@@ -21,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "hobbies")
-public class Hobby implements Serializable, EntityInterface<HobbyDTO> {
+public class Hobby implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,10 +58,6 @@ public class Hobby implements Serializable, EntityInterface<HobbyDTO> {
 
     public void setHobbyName(String hobbyName) {
         this.hobbyName = hobbyName;
-    }
-
-    public HobbyDTO getModel() {
-        return new HobbyDTO(this);
     }
 
 }

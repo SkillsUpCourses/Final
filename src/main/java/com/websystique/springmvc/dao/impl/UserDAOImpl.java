@@ -56,4 +56,26 @@ public class UserDAOImpl extends DAOTemplate<User> implements UserDAO {
 
     }
 
+    public void addHobby(Hobby hobby, User user) {
+        User old = em.find(User.class, user.getId());
+        old.setHobby(hobby);
+    }
+
+    public void deleteHobby(Hobby hobby, User user) {
+        User old = em.find(User.class, user.getId());
+        old.setHobby(null);
+    }
+
+    public void addPlace(Place place, User user) {
+        em.createNativeQuery("INSERT INTO `mydb`.`users_places`\n" +
+        "(USER_ID, PLACE_ID) VALUES ('" + user.getId() + 
+                ",'" + place.getPlaceId() + "');");
+                
+    }
+
+    public void deletePlace(Place place, User user) {
+        em.createNativeQuery("DELETE FROM `mydb`.`users_places`\n" +
+        "WHERE USER_ID='"+ user.getId() + "'and PLACE_ID = '"+ place.getPlaceId() + "';");
+    }
+
 }

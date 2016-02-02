@@ -12,7 +12,7 @@ import com.websystique.springmvc.entity.Hobby;
  *
  * @author Ksu
  */
-public class HobbyDTO implements Model<Hobby> {
+public class HobbyDTO {
 
     private long hobbyId;
     private String hobbyName;
@@ -44,10 +44,6 @@ public class HobbyDTO implements Model<Hobby> {
 
     public void setHobbyName(String hobbyName) {
         this.hobbyName = hobbyName;
-    }
-
-    public Hobby getEntity() {
-        return new Hobby(this);
     }
 
     @Override

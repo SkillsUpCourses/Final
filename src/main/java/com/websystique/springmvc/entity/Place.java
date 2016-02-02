@@ -23,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "places")
-public class Place implements Serializable, EntityInterface<PlaceDTO> {
+public class Place implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,9 +71,5 @@ public class Place implements Serializable, EntityInterface<PlaceDTO> {
 
     public void setUsers(List<User> users) {
         this.users = users;
-    }
-
-    public PlaceDTO getModel() {
-        return new PlaceDTO(this);
     }
 }

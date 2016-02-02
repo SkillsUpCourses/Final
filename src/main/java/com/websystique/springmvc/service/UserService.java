@@ -15,5 +15,14 @@ public interface UserService extends GenericService<UserDTO> {
     HobbyDTO getHobby(UserDTO user);
 
     List<PlaceDTO> getPlaces(UserDTO user);
+    
+    void addHobby(HobbyDTO hobby, UserDTO user);
+    
+    void deleteHobby(HobbyDTO hobby, UserDTO user);
+    
+    void addPlace(PlaceDTO place, UserDTO user);
+    
+    void deletePlace(PlaceDTO place, UserDTO user);
+
 
 }

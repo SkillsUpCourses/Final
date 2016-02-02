@@ -113,5 +113,15 @@ public class UsersRestController {
         userService.deleteAll();
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
+    
+    
+    
+    //TODO
+        //------------------- Get User's hobby --------------------------------------------------------
+        //------------------- Add User's hobby --------------------------------------------------------
+        //------------------- Delete User's hobby -----------------------------------------------------
+        //------------------- Get Places where user have already been ---------------------------------
+        //------------------- Add Place to user ------------------------------------------------------
+    
 
 }
