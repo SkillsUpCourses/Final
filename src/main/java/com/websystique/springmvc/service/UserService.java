@@ -1,5 +1,6 @@
 package com.websystique.springmvc.service;
 
+import com.websystique.springmvc.service.utils.GenericService;
 import com.websystique.springmvc.entity.Hobby;
 import com.websystique.springmvc.entity.Place;
 import com.websystique.springmvc.model.HobbyDTO;

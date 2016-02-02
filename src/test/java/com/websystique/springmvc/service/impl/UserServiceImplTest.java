@@ -25,28 +25,26 @@ import static org.mockito.Mockito.when;
  * @author ksu
  */
 public class UserServiceImplTest {
-    
-    
+
     private UserServiceImpl instance;
     private UserDTO user1;
     private UserDTO user2;
     private User user3;
     private static UserDAO dao;
-    
+
     public UserServiceImplTest() {
     }
-    
 
     @Before
     public void setUp() {
         dao = mock(UserDAO.class);
         instance = new UserServiceImpl();
         instance.setDao(dao);
-        user1 = new UserDTO( "Peter", "USA,CA", "peter@gmail.com");
+        user1 = new UserDTO("Peter", "USA,CA", "peter@gmail.com");
         user2 = new UserDTO("Sherlok", "London", "she@yandex.ru");
         user3 = new User(1, "Oksana", "Ukraine", "dn100488ro;@gmail.com");
     }
-    
+
     /**
      * Test of findAllUsers method, of class UserServiceImpl.
      */
@@ -72,7 +70,7 @@ public class UserServiceImplTest {
         System.out.println("findById");
         long id = 1L;
         when(dao.findById(id)).thenReturn(user3);
-        UserDTO expResult = new UserDTO (user3);
+        UserDTO expResult = new UserDTO(user3);
         UserDTO result = instance.findById(id);
         assertEquals(expResult, result);
     }
@@ -93,7 +91,7 @@ public class UserServiceImplTest {
     @Test
     public void testUpdateUser() {
         System.out.println("updateUser");
-        UserDTO user = new UserDTO( "Peter Haden", "USA,CA,LA", "peter@gmail.com");
+        UserDTO user = new UserDTO("Peter Haden", "USA,CA,LA", "peter@gmail.com");
         instance.update(user);
         verify(dao).update(new User(user));
     }
@@ -131,5 +129,5 @@ public class UserServiceImplTest {
         instance.deleteAll();
         verify(dao).deleteAll();
     }
-    
+
 }

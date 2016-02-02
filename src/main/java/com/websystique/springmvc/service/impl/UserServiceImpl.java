@@ -1,6 +1,6 @@
 package com.websystique.springmvc.service.impl;
 
-import com.websystique.springmvc.dao.GenericDAO;
+import com.websystique.springmvc.dao.utils.GenericDAO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.websystique.springmvc.model.UserDTO;
 import com.websystique.springmvc.dao.UserDAO;
 import com.websystique.springmvc.dao.impl.DAOTemplate;
-import com.websystique.springmvc.entity.EntityInterface;
+import com.websystique.springmvc.entity.utils.EntityInterface;
 import com.websystique.springmvc.entity.Hobby;
 import com.websystique.springmvc.entity.Place;
 import com.websystique.springmvc.entity.User;
@@ -42,13 +42,9 @@ public class UserServiceImpl implements UserService {
         return new UserDTO(dao.findById(id));
     }
 
-    public long save(UserDTO user) {
-        //Long id = counter.incrementAndGet();
+    public void save(UserDTO user) {
         User entity = new User(user);
-        //entity.setId(id);
         dao.add(entity);
-        //return id;
-        return 1;
     }
 
     public void update(UserDTO user) {

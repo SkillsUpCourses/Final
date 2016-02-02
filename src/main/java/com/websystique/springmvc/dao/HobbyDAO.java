@@ -5,12 +5,13 @@
  */
 package com.websystique.springmvc.dao;
 
+import com.websystique.springmvc.dao.utils.GenericDAO;
 import com.websystique.springmvc.entity.Hobby;
 
 /**
  *
  * @author ksu
  */
-public interface HobbyDAO extends GenericDAO<Hobby>{
-    
+public interface HobbyDAO extends GenericDAO<Hobby> {
+
 }

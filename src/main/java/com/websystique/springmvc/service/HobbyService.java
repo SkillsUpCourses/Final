@@ -5,6 +5,7 @@
  */
 package com.websystique.springmvc.service;
 
+import com.websystique.springmvc.service.utils.GenericService;
 import com.websystique.springmvc.model.HobbyDTO;
 
 /**
@@ -12,5 +13,5 @@ import com.websystique.springmvc.model.HobbyDTO;
  * @author ksu
  */
 public interface HobbyService extends GenericService<HobbyDTO> {
-    
+
 }

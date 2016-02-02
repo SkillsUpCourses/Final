@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.websystique.springmvc.dao;
+package com.websystique.springmvc.dao.utils;
 
 import com.websystique.springmvc.entity.User;
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.List;
  *
  * @author ksu
  */
-public interface GenericDAO <T> {
-    
+public interface GenericDAO<T> {
+
     T findById(long id);
 
     void add(T entity);
@@ -23,7 +23,7 @@ public interface GenericDAO <T> {
     void deleteById(long id);
 
     List<T> getAll();
-    
+
     boolean isExist(T entity);
 
 }

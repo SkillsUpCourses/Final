@@ -32,21 +32,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan({"com.websystique.springmvc.dao.impl", "com.websystique.springmvc.service.impl"})
 @EnableTransactionManagement
-@PropertySource(value = { "classpath:mydb.properties" ,"classpath:project.properties"})
-public class SpringConfig {
-    
+@PropertySource(value = {"classpath:mydb.properties", "classpath:project.properties"})
+public class PersistenceConfig {
+
     @Autowired
     private Environment environment;
 
-    /**@Bean
-    public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder()
-                .setType(EmbeddedDatabaseType.HSQL) //.H2 or .DERBY
-                //.addScript("db/sql/create-db.sql")
-                //.addScript("db/sql/insert-data.sql")
-                .build();
-    }**/
-    
+    /**
+     * @Bean public DataSource dataSource() { return new
+     * EmbeddedDatabaseBuilder() .setType(EmbeddedDatabaseType.HSQL) //.H2 or
+     * .DERBY //.addScript("db/sql/create-db.sql")
+     * //.addScript("db/sql/insert-data.sql") .build(); }*
+     */
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("ClassName"));
@@ -88,6 +85,7 @@ public class SpringConfig {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         return properties;
     }
 }

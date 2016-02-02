@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.websystique.springmvc.service.impl;
+package com.websystique.springmvc.service.utils;
 
-import com.websystique.springmvc.dao.GenericDAO;
-import com.websystique.springmvc.entity.EntityInterface;
-import com.websystique.springmvc.model.Model;
-import com.websystique.springmvc.service.GenericService;
+import com.websystique.springmvc.dao.utils.GenericDAO;
+import com.websystique.springmvc.entity.utils.EntityInterface;
+import com.websystique.springmvc.model.utils.Model;
+import com.websystique.springmvc.model.utils.UserAdater;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +18,21 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author ksu
  * @param <M,E>
  */
-public class ServiceTemplate<M extends Model<E>, E extends EntityInterface<M>, D extends GenericDAO<E>> implements GenericService<M> {
+public class ServiceTemplate {}
+        /**<M, E, D extends GenericDAO<E>> implements GenericService<M> {
 
     @Autowired
     private D dao;
+    
+    @Autowired
+    UserAdater adapter;
 
     public M findById(long id) {
-        return dao.findById(id).getModel();
+        return adapter.getModel(dao.findById(id));
     }
 
-    public long save(M model) {
+    public void save(M model) {
         dao.add(model.getEntity());
-        return 1;
     }
 
     public void update(M model) {
@@ -56,6 +59,5 @@ public class ServiceTemplate<M extends Model<E>, E extends EntityInterface<M>, D
     public D getDao() {
         return dao;
     }
-    
-    
-}
+
+}**/

@@ -5,6 +5,7 @@
  */
 package com.websystique.springmvc.entity;
 
+import com.websystique.springmvc.entity.utils.EntityInterface;
 import com.websystique.springmvc.model.PlaceDTO;
 import java.io.Serializable;
 import java.util.List;

@@ -18,10 +18,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author ksu
  */
-
 @Repository("userDao")
 public class UserDAOImpl extends DAOTemplate<User> implements UserDAO {
-    
 
     @PersistenceContext
     private EntityManager em;
@@ -52,10 +50,10 @@ public class UserDAOImpl extends DAOTemplate<User> implements UserDAO {
     }
 
     public List<Place> getPlaces(User user) {
-               return em.createNativeQuery("SELECT * FROM places WHERE PLACE_ID in"
+        return em.createNativeQuery("SELECT * FROM places WHERE PLACE_ID in"
                 + "(SELECT PLACE_ID FROM users_places WHERE USER_ID="
                 + user.getId() + "))").getResultList();
-                       
+
     }
 
 }

@@ -5,12 +5,13 @@
  */
 package com.websystique.springmvc.dao;
 
+import com.websystique.springmvc.dao.utils.GenericDAO;
 import com.websystique.springmvc.entity.Place;
 
 /**
  *
  * @author Ksu
  */
-public interface PlaceDAO  extends GenericDAO<Place>{
-    
+public interface PlaceDAO extends GenericDAO<Place> {
+
 }

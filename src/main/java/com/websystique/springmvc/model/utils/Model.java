@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.websystique.springmvc.entity;
+package com.websystique.springmvc.model.utils;
 
 /**
  *
  * @author ksu
- * @param <M>
  */
-public interface EntityInterface <M> {
-    M getModel();
+public interface Model<E> {
+
+    public E getEntity();
 }

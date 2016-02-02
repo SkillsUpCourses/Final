@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.websystique.springmvc.service;
+package com.websystique.springmvc.service.utils;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface GenericService<T> {
 
     T findById(long id);
 
-    long save(T model);
+    void save(T model);
 
     void update(T model);
 
@@ -24,5 +24,5 @@ public interface GenericService<T> {
     List<T> findAll();
 
     public boolean isExist(T model);
-    
+
 }

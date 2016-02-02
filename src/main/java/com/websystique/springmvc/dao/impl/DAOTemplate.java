@@ -5,7 +5,7 @@
  */
 package com.websystique.springmvc.dao.impl;
 
-import com.websystique.springmvc.dao.GenericDAO;
+import com.websystique.springmvc.dao.utils.GenericDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

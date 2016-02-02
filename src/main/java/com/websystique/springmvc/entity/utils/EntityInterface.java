@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.websystique.springmvc.controller;
+package com.websystique.springmvc.entity.utils;
 
 /**
  *
  * @author ksu
+ * @param <M>
  */
-public class PlacesRestController {
-    
+public interface EntityInterface<M> {
+
+    M getModel();
 }

@@ -5,6 +5,7 @@
  */
 package com.websystique.springmvc.model;
 
+import com.websystique.springmvc.model.utils.Model;
 import com.websystique.springmvc.entity.Place;
 import javax.persistence.Column;
 
@@ -13,7 +14,7 @@ import javax.persistence.Column;
  * @author ksu
  */
 public class PlaceDTO implements Model<Place> {
-    
+
     private long placeId;
     private String title;
 
@@ -45,8 +46,8 @@ public class PlaceDTO implements Model<Place> {
     public void setTitle(String title) {
         this.title = title;
     }
-    
-     public Place getEntity() {
+
+    public Place getEntity() {
         return new Place(this);
     }
 
@@ -74,6 +75,5 @@ public class PlaceDTO implements Model<Place> {
         }
         return true;
     }
-    
-     
+
 }

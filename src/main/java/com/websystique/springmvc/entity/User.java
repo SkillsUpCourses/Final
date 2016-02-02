@@ -20,14 +20,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 /**
  *
  * @author ksu
  */
 @Entity
 @Table(name = "users")
-public class User implements Serializable{
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,19 +41,21 @@ public class User implements Serializable{
 
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
-    
-    @ManyToOne(cascade = { CascadeType.ALL })  
+
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Hobby hobby;
 
     @ManyToMany
     @JoinTable(
-      name="users_places",
-      joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
-      inverseJoinColumns={@JoinColumn(name="PLACE_ID", referencedColumnName="PLACE_ID")})
+            name = "users_places",
+            joinColumns = {
+                @JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "PLACE_ID", referencedColumnName = "PLACE_ID")})
     private List<Place> places;
-    
+
     public User() {
-        
+
     }
 
     public User(long id, String username, String address, String email) {
@@ -63,7 +64,7 @@ public class User implements Serializable{
         this.address = address;
         this.email = email;
     }
-    
+
     public User(String username, String address, String email) {
         this.username = username;
         this.address = address;
@@ -108,7 +109,6 @@ public class User implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
-    
 
     @Override
     public int hashCode() {

@@ -2,7 +2,7 @@ package com.websystique.springmvc.model;
 
 import com.websystique.springmvc.entity.User;
 
-public class UserDTO {
+public class UserDTO  {
 
     private long id;
     private String username;
@@ -57,7 +57,6 @@ public class UserDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-    
 
     @Override
     public int hashCode() {

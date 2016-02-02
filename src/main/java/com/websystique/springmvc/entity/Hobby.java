@@ -5,6 +5,7 @@
  */
 package com.websystique.springmvc.entity;
 
+import com.websystique.springmvc.entity.utils.EntityInterface;
 import com.websystique.springmvc.model.HobbyDTO;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -18,21 +19,17 @@ import javax.persistence.Table;
  *
  * @author Ksu
  */
-
 @Entity
 @Table(name = "hobbies")
 public class Hobby implements Serializable, EntityInterface<HobbyDTO> {
-    
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "HOBBY_ID")
     private long hobbyId;
-    
+
     @Column(name = "HOBBY_NAME", nullable = false, unique = true)
     private String hobbyName;
-    
-
 
     public Hobby() {
     }
@@ -62,9 +59,9 @@ public class Hobby implements Serializable, EntityInterface<HobbyDTO> {
     public void setHobbyName(String hobbyName) {
         this.hobbyName = hobbyName;
     }
-    
+
     public HobbyDTO getModel() {
         return new HobbyDTO(this);
     }
-    
+
 }
